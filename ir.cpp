@@ -53,8 +53,8 @@ namespace IR {
 
 
   void cA(vA runner){
-	for(int i=0;i<runner.size();i++){
-		runAction0(runner[i]);
+	for(int i=0;i<runner.size();i++) {
+		runAction1(runner[i], buf[2]);
 	}
   }
 
