@@ -27,30 +27,17 @@ enum class Pins{
   P20= 30
 };
 
-enum class RemoteButton {
-  Power = 0x0,
-  Up = 0x5,
-  Left = 0x8,
-  Right = 0xA,
-  Down = 0xD,
-  OK = 0x9,
-  Plus = 0x4,
-  Minus = 0xC,
-  Back = 0x6,
-  Any = 0xFF,
-};
-
 //% color=50 weight=80
 //% icon="\uf1eb"
 namespace IR { 
-  map<RemoteButton, vA> actions;
-  map<RemoteButton, uint32_t> lastact;
+  vA action;
+  uint32_t lastact;
+  uint8_t lastCode = 0xff;
   Timer tsb; 
   uint8_t buf[32];
   uint32_t now;
   ReceiverIR *rx;
   RemoteIR::Format fmt = RemoteIR::UNKNOWN;
-
 
   void cA(vA runner){
 	auto code = fromInt(buf[2]);
@@ -61,14 +48,11 @@ namespace IR {
 
   void onReceivable(){
     int x = rx->getData(&fmt, buf, 32 * 8);
-    if(actions.find(RemoteButton::Any) != actions.end()) {
-		cA(actions[RemoteButton::Any]);
-	}
-    if(actions.find((RemoteButton)buf[2]) == actions.end()) return;
     now = tsb.read_ms();
-    if(now - lastact[(RemoteButton)buf[2]] < 100) return;
-    lastact[(RemoteButton)buf[2]] = now;
-    cA(actions[(RemoteButton)buf[2]]);
+    if((buf[2] == lastCode) && (now - lastact) < 100) return;
+    lastCode = buf[2];
+    lastact = now;
+    cA(action);
   }
 
   void monitorIR(){
@@ -88,8 +72,7 @@ namespace IR {
   }
 
   //% 
-  void onPressEvent(RemoteButton btn, Action body) {
-    //if(actions.find(btn) == actions.end()) actions[btn] = new vector();
-    actions[btn].push_back(body);
+  void onPressEvent(Action body) {
+    action.push_back(body);
   }
 }

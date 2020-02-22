@@ -23,9 +23,9 @@ namespace IR {
   */
   //% blockId=ir_received_event
   //% blockGap=20 weight=70
-  //% block="on |%btn| button pressed"
+  //% block="on | button pressed"
   //% shim=IR::onPressEvent
-  export function onPressEvent(btn: RemoteButton, body: (code : number) => void): void {
+  export function onPressEvent(body: (code : number) => void): void {
     return
   }
 
