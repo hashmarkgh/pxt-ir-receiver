@@ -53,8 +53,9 @@ namespace IR {
 
 
   void cA(vA runner){
+	auto code = fromInt(buf[2]);
 	for(int i=0;i<runner.size();i++) {
-		runAction1(runner[i], buf[2]);
+		runAction1(runner[i], code);
 	}
   }
 
