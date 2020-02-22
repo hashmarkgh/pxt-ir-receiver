@@ -34,7 +34,7 @@
     Plus = 0x4,
     Minus = 0xC,
     Back = 0x6,
-    Any = 0xF,
+    Any = 0xFF,
     }
 declare namespace IR {
 }
