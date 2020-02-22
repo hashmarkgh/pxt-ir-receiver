@@ -65,8 +65,8 @@ namespace IR {
     if(now - lastact[(RemoteButton)buf[2]] < 100) return;
     lastact[(RemoteButton)buf[2]] = now;
     cA(actions[(RemoteButton)buf[2]]);
-    if(actions.find(RemoteButton.Any) != actions.end()) {
-		cA(actions[RemoteButton.Any]);
+    if(actions.find(RemoteButton::Any) != actions.end()) {
+		cA(actions[RemoteButton::Any]);
 	}
   }
 
