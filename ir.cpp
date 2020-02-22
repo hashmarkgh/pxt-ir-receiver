@@ -36,7 +36,8 @@ enum class RemoteButton {
   OK = 0x9,
   Plus = 0x4,
   Minus = 0xC,
-  Back = 0x6
+  Back = 0x6,
+  Any = 0xFF
 };
 
 //% color=50 weight=80
@@ -51,7 +52,11 @@ namespace IR {
   RemoteIR::Format fmt = RemoteIR::UNKNOWN;
 
 
-  void cA(vA runner){for(int i=0;i<runner.size();i++){runAction0(runner[i]);} }
+  void cA(vA runner){
+	for(int i=0;i<runner.size();i++){
+		runAction0(runner[i]);
+	}
+  }
 
   void onReceivable(){
     int x = rx->getData(&fmt, buf, 32 * 8);
@@ -59,7 +64,10 @@ namespace IR {
     now = tsb.read_ms();
     if(now - lastact[(RemoteButton)buf[2]] < 100) return;
     lastact[(RemoteButton)buf[2]] = now;
-    cA(actions[(RemoteButton)buf[2]]); 
+    cA(actions[(RemoteButton)buf[2]]);
+    if(actions.find(RemoteButton.Any) != actions.end()) {
+		cA(actions[RemoteButton.Any]);
+	}
   }
 
   void monitorIR(){

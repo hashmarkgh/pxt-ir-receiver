@@ -1,7 +1,7 @@
 {
     "name": "ir",
-    "version": "0.1.2",
-    "description": "Tinkercademy package for ElecFreaks IR receiver module",
+    "version": "0.1.3",
+    "description": "Robotbit IR receiver module",
     "license": "MIT",
     "dependencies": {
         "core": "*"
